@@ -5,7 +5,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pe.robertem.example.exchangeapplication.entity.Currency;
 import pe.robertem.example.exchangeapplication.entity.ExchangeRate;
-import pe.robertem.example.exchangeapplication.exception.InvalidCurrencyException;
+import pe.robertem.example.exchangeapplication.exception.InvalidExchangeCurrencyException;
 import pe.robertem.example.exchangeapplication.repository.ExchangeRateRepository;
 
 import java.time.LocalDateTime;
@@ -46,7 +46,7 @@ public class ExchangeRateService {
         List<ExchangeRate> exchangeRates = this.findByCurrency(currencyId);
 
         if (exchangeRates.isEmpty()) {
-            throw new InvalidCurrencyException("There is not exchange rate for the currency " + currencyId);
+            throw new InvalidExchangeCurrencyException("There is not exchange rate for the currency " + currencyId);
         } else {
             return exchangeRates.get(0);
         }
@@ -57,7 +57,7 @@ public class ExchangeRateService {
         Currency localCurrency = currencyService.getLocalCurrency();
 
         if (localCurrency.getId().equals(exchangeRate.getCurrency().getId())) {
-            throw new InvalidCurrencyException("Currency of exchange rate must be different from local currency");
+            throw new InvalidExchangeCurrencyException("Currency of exchange rate must be different from local currency");
         }
 
         exchangeRate.setCreationDate(LocalDateTime.now());

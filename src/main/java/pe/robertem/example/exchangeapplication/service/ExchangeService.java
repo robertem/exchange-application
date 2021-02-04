@@ -3,7 +3,7 @@ package pe.robertem.example.exchangeapplication.service;
 import org.springframework.stereotype.Service;
 import pe.robertem.example.exchangeapplication.entity.Currency;
 import pe.robertem.example.exchangeapplication.entity.Exchange;
-import pe.robertem.example.exchangeapplication.exception.InvalidCurrencyException;
+import pe.robertem.example.exchangeapplication.exception.InvalidExchangeCurrencyException;
 import pe.robertem.example.exchangeapplication.repository.ExchangeRepository;
 
 import java.math.BigDecimal;
@@ -60,12 +60,12 @@ public class ExchangeService {
     public void validateExchangeCurrenciesFromLocal(final Currency sourceCurrency, final Currency destinationCurrency,
                                                     final Currency localCurrency) {
         if (sourceCurrency.getId().equals(destinationCurrency.getId())) {
-            throw new InvalidCurrencyException("Source and target currency can't be the same");
+            throw new InvalidExchangeCurrencyException("Source and target currency can't be the same");
         }
 
         if (!localCurrency.getId().equals(sourceCurrency.getId()) && !localCurrency.getId().equals(
                 destinationCurrency.getId())) {
-            throw new InvalidCurrencyException(
+            throw new InvalidExchangeCurrencyException(
                     "Source or target currency must be the local currency " + localCurrency.getId());
         }
     }
